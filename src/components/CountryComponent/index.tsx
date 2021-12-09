@@ -14,7 +14,7 @@ export function CountryComponent() {
         />
       </div>
       <div className="countryInfo">
-        <strong>Germany</strong>
+        <strong>The United States of America</strong>
         <p>
           Population: <span>81,770,000</span>
         </p>
