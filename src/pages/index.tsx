@@ -9,14 +9,14 @@ export default function Home() {
       <FilterArea />
 
       <main className={styles.container}>
-        <CountryComponent />
-        <CountryComponent />
-        <CountryComponent />
-        <CountryComponent />
-        <CountryComponent />
-        <CountryComponent />
-        <CountryComponent />
-        <CountryComponent />
+        <CountryComponent href="/country/1" />
+        <CountryComponent href="/country/2" />
+        <CountryComponent href="/country/3" />
+        <CountryComponent href="/country/4" />
+        <CountryComponent href="/country/5" />
+        <CountryComponent href="/country/6" />
+        <CountryComponent href="/country/7" />
+        <CountryComponent href="/country/8" />
       </main>
     </>
   );
