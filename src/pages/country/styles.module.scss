@@ -1,0 +1,90 @@
+.container {
+  & > div:first-child {
+    width: 90%;
+    margin: 40px auto 0;
+
+    button {
+      width: 100px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      font-size: 17px;
+      color: white;
+      background-color: var(--azul-escuro-800);
+      border: none;
+      border-radius: 3px;
+    }
+  }
+}
+
+.contentContainer {
+  width: 90%;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+
+  .imageContainer {
+    position: relative;
+    width: 100%;
+    height: 250px;
+  }
+}
+
+.countryInfo {
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    font-size: 23px;
+    font-weight: 800;
+    margin: 30px 0 30px 0;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+
+    div {
+      p {
+        font-weight: 600;
+        line-height: 1.8;
+        font-size: 1.065rem;
+
+        span {
+          font-weight: 300;
+        }
+      }
+    }
+
+    div + div {
+      margin-top: 30px;
+    }
+  }
+
+  .borderInfo {
+    display: flex;
+    flex-direction: column;
+    p {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    div {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 10px;
+      row-gap: 10px;
+
+      div {
+        height: 35px;
+        background-color: var(--azul-escuro-800);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
