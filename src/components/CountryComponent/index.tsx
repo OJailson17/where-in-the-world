@@ -4,16 +4,20 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 
 type CountryComponent = {
-  href?: string;
+  flag?: string;
+  name: string;
+  population: number;
+  region: string;
+  capital: string;
 };
 
-export function CountryComponent({ href }: CountryComponent) {
+export function CountryComponent(props: CountryComponent) {
   return (
-    <Link href={href} passHref>
+    <Link href={`/country/${props.name}`} passHref>
       <div className={styles.container}>
         <div className="imageContainer">
           <Image
-            src="https://via.placeholder.com/320x200"
+            src={props.flag}
             alt="Country flag"
             layout="fill"
             objectFit="cover"
@@ -21,15 +25,15 @@ export function CountryComponent({ href }: CountryComponent) {
           />
         </div>
         <div className="countryInfo">
-          <strong>The United States of America</strong>
+          <strong>{props.name}</strong>
           <p>
-            Population: <span>81,770,000</span>
+            Population: <span>{props.population}</span>
           </p>
           <p>
-            Region: <span>Europe</span>
+            Region: <span>{props.region}</span>
           </p>
           <p>
-            Capital: <span>Berlin</span>
+            Capital: <span>{props.capital}</span>
           </p>
         </div>
       </div>
