@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Image from "next/image";
 import { Fragment } from "react";
 import { BsArrowLeft } from "react-icons/bs";
@@ -109,7 +109,14 @@ export default function Countries({ countries }: CountrieProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticPaths = () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { country } = params;
 
   const { data } = await api.get(`/name/${country}`);
