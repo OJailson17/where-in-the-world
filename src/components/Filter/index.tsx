@@ -1,16 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { ContinentContext } from "../../context";
+import { FilterContext } from "../../context";
 import styles from "./styles.module.scss";
 
 export function FilterArea() {
-  const { continent, setContinent } = useContext(ContinentContext);
+  const [searchedCountry, setSearchedCountry] = useState("");
+
+  const { continent, setContinent, getSearchedCountry } =
+    useContext(FilterContext);
 
   return (
     <div className={styles.container}>
-      <form>
+      <form onSubmit={(e) => getSearchedCountry(e, searchedCountry)}>
         <AiOutlineSearch className={styles.searchIcon} />
-        <input type="text" placeholder="Search for a country..." />
+        <input
+          type="text"
+          placeholder="Search for a country..."
+          value={searchedCountry}
+          onChange={(e) => setSearchedCountry(e.target.value)}
+        />
       </form>
       <div className={styles.selectContainer}>
         <select

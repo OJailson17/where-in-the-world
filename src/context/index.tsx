@@ -6,32 +6,40 @@ import {
   useState,
 } from "react";
 
-type ContinentProviderProps = {
+type FilterProviderProps = {
   children: ReactNode;
 };
 
-type ContinentStateProps =
-  | "Africa"
-  | "Americas"
-  | "Asia"
-  | "Europe"
-  | "Oceania";
+type FilterStateProps = "Africa" | "Americas" | "Asia" | "Europe" | "Oceania";
 
-type ContinentContextProps = {
-  continent: ContinentStateProps;
+type FilterContextProps = {
+  continent: FilterStateProps;
   setContinent: Dispatch<SetStateAction<string>>;
+  searchedCountry: string;
+  getSearchedCountry: (
+    event: React.FormEvent<HTMLFormElement>,
+    country: string
+  ) => void;
 };
 
-export const ContinentContext = createContext<ContinentContextProps>(
-  {} as ContinentContextProps
+export const FilterContext = createContext<FilterContextProps>(
+  {} as FilterContextProps
 );
 
-export function ContinentContextProvider({ children }: ContinentProviderProps) {
-  const [continent, setContinent] = useState<ContinentStateProps>("Americas");
+export function ContinentContextProvider({ children }: FilterProviderProps) {
+  const [continent, setContinent] = useState<FilterStateProps>("Americas");
+  const [searchedCountry, setSearchedCountry] = useState("");
+
+  const getSearchedCountry = (event, country: string) => {
+    event.preventDefault();
+    setSearchedCountry(country.toLocaleLowerCase());
+  };
 
   return (
-    <ContinentContext.Provider value={{ continent, setContinent }}>
+    <FilterContext.Provider
+      value={{ continent, setContinent, searchedCountry, getSearchedCountry }}
+    >
       {children}
-    </ContinentContext.Provider>
+    </FilterContext.Provider>
   );
 }
