@@ -25,9 +25,7 @@ export default function Home({ countries }: HomeProps) {
 
   // Realiza uma chamada para a api buscando o país pelo nome
   const handleCountrySearch = async () => {
-    const { data } = await api.get(
-      `https://restcountries.com/v2/name/${searchedCountry}`
-    );
+    const { data } = await api.get(`/name/${searchedCountry}`);
 
     if (data.status) {
       alert(`ERROR: ${data.message}`);
