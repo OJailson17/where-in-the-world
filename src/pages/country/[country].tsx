@@ -1,9 +1,28 @@
+import { GetServerSideProps } from "next";
 import Image from "next/image";
+import { Fragment } from "react";
 import { BsArrowLeft } from "react-icons/bs";
+import { api } from "../../services/api";
 
 import styles from "./styles.module.scss";
 
-export default function Countries() {
+type CountrieProps = {
+  countries: {
+    flag: string;
+    name: string;
+    nativeName: string;
+    population: number;
+    region: string;
+    subRegion: string;
+    capital: string;
+    topLevelDomain: string[];
+    currencies: string[];
+    languages: string[];
+    borderCountries: string[];
+  }[];
+};
+
+export default function Countries({ countries }: CountrieProps) {
   return (
     <main className={styles.container}>
       <div>
@@ -14,62 +33,106 @@ export default function Countries() {
       </div>
 
       <div className={styles.contentContainer}>
-        <div className={styles.imageContainer}>
-          <Image
-            src="https://via.placeholder.com/400x400"
-            alt="Country flag"
-            layout="fill"
-            objectFit="cover"
-            priority
-          />
-        </div>
-
-        <div className={styles.countryInfo}>
-          <strong>Belgium</strong>
-
-          <div className={styles.info}>
-            <div>
-              <p>
-                Native Name: <span>Belgiê</span>
-              </p>
-              <p>
-                Population: <span>11.319.511</span>
-              </p>
-              <p>
-                Region: <span>Europe</span>
-              </p>
-              <p>
-                Sub Region: <span>Western Europe</span>
-              </p>
-              <p>
-                Capital: <span>Brussels</span>
-              </p>
+        {countries.map((country) => (
+          <Fragment key={country.name}>
+            <div className={styles.imageContainer}>
+              <Image
+                src={country.flag}
+                alt="Country flag"
+                layout="fill"
+                objectFit="cover"
+                priority
+              />
             </div>
 
-            <div>
-              <p>
-                Top Level Domain: <span>.be</span>
-              </p>
-              <p>
-                Currencies: <span>Euro</span>
-              </p>
-              <p>
-                Languages: <span>Dutch, French, German</span>
-              </p>
-            </div>
-          </div>
+            <div className={styles.countryInfo}>
+              <strong>{country.name}</strong>
 
-          <div className={styles.borderInfo}>
-            <p>Border Countries:</p>
+              <div className={styles.info}>
+                <div>
+                  <p>
+                    Native Name: <span>{country.nativeName}</span>
+                  </p>
+                  <p>
+                    Population: <span>{country.population}</span>
+                  </p>
+                  <p>
+                    Region: <span>{country.region}</span>
+                  </p>
+                  <p>
+                    Sub Region: <span>{country.subRegion}</span>
+                  </p>
+                  <p>
+                    Capital: <span>{country.capital}</span>
+                  </p>
+                </div>
 
-            <div>
-              <div>France</div>
-              <div>Germany</div>
-              <div>Netherlands</div>
+                <div>
+                  <p>
+                    Top Level Domain:{" "}
+                    {country.topLevelDomain.map((domain) => (
+                      <span key={domain}>{domain}</span>
+                    ))}
+                  </p>
+                  <p>
+                    Currencies:{" "}
+                    {country.currencies.map((currency) => (
+                      <span key={currency}>{currency}</span>
+                    ))}
+                  </p>
+                  <p>
+                    Languages:{" "}
+                    {country.languages.map((language) => (
+                      <span key={language}>{language}, </span>
+                    ))}
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.borderInfo}>
+                <p>Border Countries:</p>
+                <div>
+                  {country.borderCountries.length < 1 ? (
+                    <div>Nenhum País</div>
+                  ) : (
+                    country.borderCountries.map((country) => (
+                      <div key={country}>{country}</div>
+                    ))
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </Fragment>
+        ))}
       </div>
     </main>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { country } = params;
+
+  const { data } = await api.get(`/name/${country}`);
+
+  const countries = data.map((country) => {
+    return {
+      flag: country.flag,
+      name: country.name,
+      nativeName: country.nativeName,
+      population: country.population,
+      region: country.region,
+      subRegion: country.subregion,
+      capital: country.capital,
+      topLevelDomain: country.topLevelDomain,
+      currencies: country.currencies.map((currency) => currency.name),
+      languages: country.languages.map((language) => language.name),
+      borderCountries: country.borders || [],
+    };
+  });
+
+  return {
+    props: {
+      countries,
+    },
+  };
+};
