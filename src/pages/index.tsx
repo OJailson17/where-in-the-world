@@ -23,6 +23,7 @@ export default function Home({ countries }: HomeProps) {
   const { continent, searchedCountry } = useContext(FilterContext);
   const [countriesData, setCountriesData] = useState<CountryProps[]>([]);
 
+  // Realiza uma chamada para a api buscando o país pelo nome
   const handleCountrySearch = async () => {
     const { data } = await api.get(
       `https://restcountries.com/v2/name/${searchedCountry}`
@@ -45,6 +46,7 @@ export default function Home({ countries }: HomeProps) {
     }
   };
 
+  // Filtra os países por continente
   useEffect(() => {
     const filterCountry = countries.filter(
       (country) => country.region === continent
@@ -53,10 +55,9 @@ export default function Home({ countries }: HomeProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [continent]);
 
-  // TODO Filtrar os paises por nome
-
+  // Verifica se o input está vazio e chama a função de busca
   useEffect(() => {
-    if (searchedCountry === "") {
+    if (searchedCountry.trim() === "") {
       return;
     } else {
       handleCountrySearch();
