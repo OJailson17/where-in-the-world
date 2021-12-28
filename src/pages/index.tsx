@@ -1,11 +1,11 @@
-import { GetStaticProps } from "next";
-import { useContext, useEffect, useState } from "react";
-import { CountryComponent } from "../components/CountryComponent";
-import { FilterArea } from "../components/Filter";
-import { FilterContext } from "../context";
-import { api } from "../services/api";
+import { GetStaticProps } from 'next';
+import { useContext, useEffect, useState } from 'react';
+import { CountryComponent } from '../components/CountryComponent';
+import { FilterArea } from '../components/Filter';
+import { FilterContext } from '../context';
+import { api } from '../services/api';
 
-import styles from "../styles/home.module.scss";
+import styles from '../styles/home.module.scss';
 
 type CountryProps = {
   flag: string;
@@ -30,7 +30,7 @@ export default function Home({ countries }: HomeProps) {
     if (data.status) {
       alert(`ERROR: ${data.message}`);
     } else {
-      const countries = data.map((country) => {
+      const countries = data.map(country => {
         return {
           flag: country.flag,
           name: country.name,
@@ -47,7 +47,7 @@ export default function Home({ countries }: HomeProps) {
   // Filtra os países por continente
   useEffect(() => {
     const filterCountry = countries.filter(
-      (country) => country.region === continent
+      country => country.region === continent,
     );
     setCountriesData(filterCountry);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,7 +55,7 @@ export default function Home({ countries }: HomeProps) {
 
   // Verifica se o input está vazio e chama a função de busca
   useEffect(() => {
-    if (searchedCountry.trim() === "") {
+    if (searchedCountry.trim() === '') {
       return;
     } else {
       handleCountrySearch();
@@ -69,7 +69,7 @@ export default function Home({ countries }: HomeProps) {
       <FilterArea />
 
       <main className={styles.container}>
-        {countriesData.map((country) => (
+        {countriesData.map(country => (
           <CountryComponent
             name={country.name}
             capital={country.capital}
@@ -86,7 +86,7 @@ export default function Home({ countries }: HomeProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const response = await api.get(
-    "/all?fields=name,capital,population,flag,region"
+    '/all?fields=name,capital,population,flag,region',
   );
   const countries = response.data;
 

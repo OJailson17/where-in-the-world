@@ -1,15 +1,18 @@
-import { AppProps } from "next/app";
-import { Header } from "../components/Header";
-import { ContinentContextProvider } from "../context";
+import { AppProps } from 'next/app';
+import { ThemeProvider, ThemeProviderProps } from 'next-themes';
+import { Header } from '../components/Header';
+import { ContinentContextProvider } from '../context';
 
-import "../styles/global.scss";
+import '../styles/global.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ContinentContextProvider>
-      <Header />
-      <Component {...pageProps} />
-    </ContinentContextProvider>
+    <ThemeProvider storageKey='theme' themes={['light', 'dark']}>
+      <ContinentContextProvider>
+        <Header />
+        <Component {...pageProps} />
+      </ContinentContextProvider>
+    </ThemeProvider>
   );
 }
 

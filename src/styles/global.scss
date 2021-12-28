@@ -15,12 +15,17 @@
   --branco: #fff;
 }
 
+[data-theme='light'] body {
+  background-color: #fafafa;
+  color: black;
+}
+
 body,
 button,
 input,
 textarea,
 select {
-  font-family: "Nunito Sans", sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
 }
 
 body {
