@@ -141,5 +141,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       countries,
     },
+    revalidate: 60 * 60 * 48, // 2 dias
   };
 };
