@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { GetStaticProps } from 'next';
+import { useTheme } from 'next-themes';
 import { useContext, useEffect, useState } from 'react';
 import { CountryComponent } from '../components/CountryComponent';
 import { FilterArea } from '../components/Filter';
@@ -22,6 +24,8 @@ type HomeProps = {
 export default function Home({ countries }: HomeProps) {
   const { continent, searchedCountry } = useContext(FilterContext);
   const [countriesData, setCountriesData] = useState<CountryProps[]>([]);
+
+  const { theme, setTheme } = useTheme();
 
   // Realiza uma chamada para a api buscando o país pelo nome
   const handleCountrySearch = async () => {
@@ -50,7 +54,6 @@ export default function Home({ countries }: HomeProps) {
       country => country.region === continent,
     );
     setCountriesData(filterCountry);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [continent]);
 
   // Verifica se o input está vazio e chama a função de busca
@@ -60,9 +63,15 @@ export default function Home({ countries }: HomeProps) {
     } else {
       handleCountrySearch();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchedCountry]);
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  }, []);
 
   return (
     <>

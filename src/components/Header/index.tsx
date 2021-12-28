@@ -8,10 +8,8 @@ export function Header() {
   const changeTheme = () => {
     if (theme === 'dark') {
       setTheme('light');
-    } else if (theme === 'light') {
-      setTheme('dark');
     } else {
-      return;
+      setTheme('dark');
     }
   };
 
