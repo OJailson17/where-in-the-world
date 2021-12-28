@@ -1,5 +1,5 @@
 import { useTheme } from 'next-themes';
-import { BsMoonFill } from 'react-icons/bs';
+import { BsMoon, BsMoonFill } from 'react-icons/bs';
 import styles from './styles.module.scss';
 
 export function Header() {
@@ -20,7 +20,12 @@ export function Header() {
       <nav>
         <h1>Where in the World?</h1>
         <button onClick={changeTheme}>
-          <BsMoonFill fontSize={17} /> Dark Mode
+          {theme === 'dark' ? (
+            <BsMoonFill fontSize={17} />
+          ) : (
+            <BsMoon fontSize={17} />
+          )}{' '}
+          Dark Mode
         </button>
       </nav>
     </header>
