@@ -1,10 +1,11 @@
-import { GetStaticProps } from "next";
-import Image from "next/image";
-import { Fragment } from "react";
-import { BsArrowLeft } from "react-icons/bs";
-import { api } from "../../services/api";
+import { GetStaticProps } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Fragment } from 'react';
+import { BsArrowLeft } from 'react-icons/bs';
+import { api } from '../../services/api';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
 type CountrieProps = {
   countries: {
@@ -26,21 +27,23 @@ export default function Countries({ countries }: CountrieProps) {
   return (
     <main className={styles.container}>
       <div>
-        <button>
-          <BsArrowLeft />
-          Back
-        </button>
+        <Link href='/' passHref>
+          <button>
+            <BsArrowLeft />
+            Back
+          </button>
+        </Link>
       </div>
 
       <div className={styles.contentContainer}>
-        {countries.map((country) => (
+        {countries.map(country => (
           <Fragment key={country.name}>
             <div className={styles.imageContainer}>
               <Image
                 src={country.flag}
-                alt="Country flag"
-                layout="fill"
-                objectFit="cover"
+                alt='Country flag'
+                layout='fill'
+                objectFit='cover'
                 priority
               />
             </div>
@@ -69,20 +72,20 @@ export default function Countries({ countries }: CountrieProps) {
 
                 <div>
                   <p>
-                    Top Level Domain:{" "}
-                    {country.topLevelDomain.map((domain) => (
+                    Top Level Domain:{' '}
+                    {country.topLevelDomain.map(domain => (
                       <span key={domain}>{domain}</span>
                     ))}
                   </p>
                   <p>
-                    Currencies:{" "}
-                    {country.currencies.map((currency) => (
+                    Currencies:{' '}
+                    {country.currencies.map(currency => (
                       <span key={currency}>{currency}</span>
                     ))}
                   </p>
                   <p>
-                    Languages:{" "}
-                    {country.languages.map((language) => (
+                    Languages:{' '}
+                    {country.languages.map(language => (
                       <span key={language}>{language}, </span>
                     ))}
                   </p>
@@ -95,7 +98,7 @@ export default function Countries({ countries }: CountrieProps) {
                   {country.borderCountries.length < 1 ? (
                     <div>Nenhum País</div>
                   ) : (
-                    country.borderCountries.map((country) => (
+                    country.borderCountries.map(country => (
                       <div key={country}>{country}</div>
                     ))
                   )}
@@ -112,7 +115,7 @@ export default function Countries({ countries }: CountrieProps) {
 export const getStaticPaths = () => {
   return {
     paths: [],
-    fallback: "blocking",
+    fallback: 'blocking',
   };
 };
 
@@ -121,7 +124,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { data } = await api.get(`/name/${country}`);
 
-  const countries = data.map((country) => {
+  const countries = data.map(country => {
     return {
       flag: country.flag,
       name: country.name,
@@ -131,8 +134,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       subRegion: country.subregion,
       capital: country.capital,
       topLevelDomain: country.topLevelDomain,
-      currencies: country.currencies.map((currency) => currency.name),
-      languages: country.languages.map((language) => language.name),
+      currencies: country.currencies.map(currency => currency.name),
+      languages: country.languages.map(language => language.name),
       borderCountries: country.borders || [],
     };
   });
